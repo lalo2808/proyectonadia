@@ -833,6 +833,7 @@ class RegularizacionApp(MDApp):
         sm.add_widget(ProfileScreen(name="profile"))
         sm.add_widget(CertificatesScreen(name="certificates"))
         sm.add_widget(SettingsScreen(name="settings"))
+        sm.add_widget(VideoScreen(name="videos"))
 
         Clock.schedule_once(self.ir_login, 2.5)
         return sm
