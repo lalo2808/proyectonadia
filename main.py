@@ -402,6 +402,12 @@ KV = """
             on_release: app.abrir_cursos()
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
+         # Dentro de <DashboardScreen>:
+        MDRaisedButton:
+            text: "Ver Videos Tutoriales"
+            on_release: app.cambiar_pantalla("videos") # O la función que definas
+            pos_hint: {"center_x": 0.5}
+
         MDRaisedButton:
             text: "Mi Perfil"
             on_release: app.abrir_perfil()
@@ -424,11 +430,7 @@ KV = """
             on_release: app.cerrar_sesion()
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
-        # Dentro de <DashboardScreen>:
-        MDRaisedButton:
-            text: "Ver Videos Tutoriales"
-            on_release: app.cambiar_pantalla("videos") # O la función que definas
-            pos_hint: {"center_x": 0.5}
+       
 <CoursesScreen>:
     MDBoxLayout:
         orientation: "vertical"
