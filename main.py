@@ -77,6 +77,10 @@ class CertificatesScreen(Screen):
 class SettingsScreen(Screen):
     pass
 
+# ... después de las otras clases de Screen ...
+class VideoScreen(Screen):
+    pass
+
 # ============================================================
 # CARDS
 # ============================================================
@@ -419,6 +423,12 @@ KV = """
             text: "Cerrar Sesión"
             on_release: app.cerrar_sesion()
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        # Dentro de <DashboardScreen>:
+        MDRaisedButton:
+            text: "Ver Videos Tutoriales"
+            on_release: app.cambiar_pantalla("videos") # O la función que definas
+            pos_hint: {"center_x": 0.5}
 <CoursesScreen>:
     MDBoxLayout:
         orientation: "vertical"
@@ -758,6 +768,36 @@ KV = """
         MDRaisedButton:
             text: "Cerrar sesión"
             on_release: app.cerrar_sesion()
+
+<VideoScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "Recursos de Video"
+            left_action_items: [["arrow-left", lambda x: app.volver("dashboard")]]
+            elevation: 4
+
+        ScrollView:
+            MDList:
+                id: lista_videos
+                padding: dp(10)
+                spacing: dp(12)
+
+                # Ejemplo de un elemento de video
+                TwoLineIconListItem:
+                    text: "Introducción a Matemáticas"
+                    secondary_text: "Ver tutorial en YouTube"
+                    on_release: app.abrir_enlace_video("https://www.youtube.com/watch?v=ejemplo1")
+                    IconLeftWidget:
+                        icon: "video"
+
+                TwoLineIconListItem:
+                    text: "Comprensión Lectora"
+                    secondary_text: "Video de apoyo módulo 2"
+                    on_release: app.abrir_enlace_video("https://www.youtube.com/watch?v=ejemplo2")
+                    IconLeftWidget:
+                        icon: "play-circle" 
 """
 
 # ============================================================
@@ -838,7 +878,7 @@ class RegularizacionApp(MDApp):
         dashboard.ids.bienvenida.text = f"Bienvenido, {usuario['nombre']}"
 
         mostrar_mensaje("Inicio de sesión correcto")
-        self.cambiar_pantalla("dashboard")
+        self.cambiar_pantalla("dashboard")                              
 
     def registrar(self):
         pantalla = self.root.get_screen("register")
@@ -869,6 +909,15 @@ class RegularizacionApp(MDApp):
     # ============================================================
     # DASHBOARD
     # ============================================================
+
+    def abrir_videos(self):
+        self.root.current = "videos"
+
+    def abrir_enlace_video(self, url):
+        import webbrowser
+        webbrowser.open(url)
+
+
     def abrir_cursos(self):
         self.cargar_cursos()
         self.cambiar_pantalla("courses")
